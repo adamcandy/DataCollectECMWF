@@ -47,8 +47,9 @@ def ReadArguments(self):
         elif (self.argument == '-v'):  universe.verbose = True
         elif (self.argument == '-vv'): universe.verbose = True; universe.debug = True; 
         elif (self.argument == '-q'):  universe.verbose = False
-        elif (self.argument == '-d'):  universe.periods.append(arguments.pop(0).rstrip())
-        elif (self.argument == '-r'):  universe.periods.append(arguments.pop(0).rstrip())
+        elif (self.argument == '-m'):  universe.periods.append(arguments.pop(0).rstrip())
+        elif (self.argument == '-r'):  universe.repos.append(arguments.pop(0).rstrip())
+        elif (self.argument == '-d'):  universe.directory(arguments.pop(0).rstrip())
         else:
             usage(unknown = argument)
 

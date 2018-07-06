@@ -25,12 +25,14 @@
 ##########################################################################
 
 def main():
-  """ Main routine 
-  """
+    """ Main routine 
+    """
 
     from Universe import universe
     from Reporting import report, error
     from Support import ReadArguments
+
+    import os
 
     import ecmwf
     import ncar
@@ -47,15 +49,19 @@ def main():
 
     report('%(blue)sProcessing periods: %(yellow)s%(periods)s%(end)s', var = {'periods': '%(grey)s, %(yellow)s'.join(universe.periods)})
     report('%(blue)sProcessing repos: %(yellow)s%(repos)s%(end)s', var = {'periods': '%(grey)s, %(yellow)s'.join(universe.repos)})
+    
+    report('%(blue)sOutput to directory: %(yellow)s%(directory)s%(end)s', var = {'directory': universe.directory})
+
+    
 
     for period in universe.periods:
         report('%(blue)sProcessing period: %(yellow)s%(period)s%(end)s', var = {'period': period})
 
         if 'ecmwf' in universe.repos:
             report('  %(blue)sProcessing repo: %(yellow)s%(repo)s%(end)s', var = {'repo': 'ecmwf'})
-            ecmwf.download(yearmonth=period)
+            ecmwf.download(yearmonth=period, folder=universe.directory)
 
         if 'ncar' in universe.repos:
             report('  %(blue)sProcessing repo: %(yellow)s%(repo)s%(end)s', var = {'repo': 'ncar'})
-            ncar.download(yearmonth=period)
+            ncar.download(yearmonth=period, folder=universe.directory)
 

@@ -34,8 +34,9 @@ def usage(unknown = None):
     print '''Usage for %(cmdname)s
  %(cmdname)s [options] (filename)
 - Options ---------------------\ 
-   -d (YYYYMM)                 | Specify month period  (multiple -d permitted)
+   -m (YYYYMM)                 | Specify month period  (multiple -d permitted)
    -r (repo)                   | Specify repository names, e.g. 'ecmwf', 'ncar', ...  (multiple -r permitted)
+   -d (directory)              | Specify output folder 
                                |_________________________________________________________________________________
    -h                          | Help
    -v                          | Verbose

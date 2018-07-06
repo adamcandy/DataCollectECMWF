@@ -23,7 +23,12 @@
 #  
 ##########################################################################
 
-def download(filename=None, yearmonth='201708', field='wind', fformat=None):
+from Universe import universe
+from Reporting import report, error
+
+import os
+
+def download(filename=None, yearmonth='201708', field='wind', fformat=None, folder='./'):
     from pydap.client import open_url                                               
     from pydap.cas.urs import setup_session                                         
 
@@ -38,16 +43,32 @@ def download(filename=None, yearmonth='201708', field='wind', fformat=None):
     #https://rda.ucar.edu/thredds/dodsC/files/g/ds094.1/2017/wnd10m.cdas1.201708.grb2
     #https://rda.ucar.edu/thredds/dodsC/files/g/ds094.1/2017/wnd10m.cdas1.201709.grb2
 
+    url = None
+    description = None
+
     if field == 'wind':
         url = 'https://rda.ucar.edu/thredds/dodsC/files/g/ds094.1/%(year)d/wnd10m.cdas1.%(year)d%(month)d.grb2' % {
             'year':  year,
             'month': month,
         } 
+        description = 'wnd10m'
     else:
         url = 'https://rda.ucar.edu/thredds/dodsC/files/g/ds094.1/%(year)d/prmsl.cdas1.%(year)d%(month)d.grb2' % {
             'year':  year,
             'month': month,
         } 
+        description = 'prmsl'
+
+    if not filename:
+        filename = 'ncar-%(description)s-%(yearmonth)s.nc' % {
+            'yearmonth': yearmonth,
+            'description': description,
+        }
+
+    if not os.path.exists(os.path.abspath(folder)):
+        mkdir_p(os.path.abspath(folder))
+
+    fullname = os.path.join(os.path.abspath(folder), filename)
 
     session = setup_session(username, password, check_url=url2)                     
     data = open_url(url, session=session)
@@ -59,7 +80,7 @@ def download(filename=None, yearmonth='201708', field='wind', fformat=None):
 
 
 def test():
-    #download(yearmonth='201709')
+    download(yearmonth='201709', folder='../test/')
 
 if __name__ == '__main__':
     sys.exit(test())

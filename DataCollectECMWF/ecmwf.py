@@ -25,9 +25,12 @@
 
 from Universe import universe
 from Reporting import report, error
+from Support import mkdir_p
 
 from ecmwfapi import ECMWFDataServer
 from calendar import monthrange
+
+import os
 
 def test(filename='test.nc'):
     server = ECMWFDataServer()
@@ -48,7 +51,7 @@ def test(filename='test.nc'):
         "target": filename,
      })
 
-def download(filename=None, yearmonth='201708', fformat=None):
+def download(filename=None, yearmonth='201708', fformat=None, folder='./'):
     year  = int(yearmonth[0:4])
     month = int(yearmonth[4:6])
     #date  = int(yearmonthdate[6:8])
@@ -58,6 +61,11 @@ def download(filename=None, yearmonth='201708', fformat=None):
         filename = 'ecmwf-era5-winds10m-%(yearmonth)s.nc' % {
             'yearmonth': yearmonth,
         }
+
+    if not os.path.exists(os.path.abspath(folder)):
+        mkdir_p(os.path.abspath(folder))
+
+    fullname = os.path.join(os.path.abspath(folder), filename)
 
     spec = {
         "class": "ea",
@@ -80,14 +88,14 @@ def download(filename=None, yearmonth='201708', fformat=None):
         #"grid": "0.25/0.25",
         "area": "46/-100/5/-50",  # North/West/South/East
         #"format": "netcdf",
-        "target": filename,
+        "target": fullname,
     }
     if fformat:
         spec['format'] = fformat
         # Requires grid spec?
         #    See: https://software.ecmwf.int/wiki/display/CKB/Global+data%3A+Download+data+from+ECMWF+for+a+particular+area+and+resolution
-    print 'ECMWF ERA5 Collect for period %(period)s, output to: %(filename)s' % {
-        'filename': filename,
+    print 'ECMWF ERA5 Collect for period %(period)s, output to: %(fullname)s' % {
+        'filename': fullname,
         'period': spec['date'],
     }
     if not universe.dry:
@@ -98,8 +106,7 @@ fformat = None
 #fformat = 'netcdf'
 
 def test():
-    download(yearmonth='201708')
-    #download(yearmonth='201709')
+    download(yearmonth='201709', folder='../test/')
 
 
 if __name__ == '__main__':
