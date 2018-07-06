@@ -1,4 +1,6 @@
 TODO
 ====
-- [x] Check is file output alredy exists and do not overwrite, unless -y
-
+- [ ] Check is file output alredy exists and do not overwrite, unless -y
+- [ ] sudo pip install --ignore-installed Pydap[handlers.netcdf]
+- [ ] sudo pip install --ignore-installed -U Pydap
+- [ ] Check no influence on Shingle builds (Pydap change to latest version)
