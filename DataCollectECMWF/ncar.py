@@ -33,8 +33,8 @@ def download(filename=None, yearmonth='201708', field='wind', fformat=None, fold
     from pydap.cas.get_cookies import setup_session
     #from pydap.cas.urs import setup_session                                         
 
-    ***REMOVED***
-    ***REMOVED***
+    username = None 
+    password = None
 
     year  = int(yearmonth[0:4])
     month = int(yearmonth[4:6])
