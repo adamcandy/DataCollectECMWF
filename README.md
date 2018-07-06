@@ -14,6 +14,9 @@ Install ECMWF API:
 Contact
 -------
 
-For further information and updates, please contact the author Dr Adam S. Candy at [adam@candylab.org](mailto:adam@candylab.org).
+For further information and updates, please contact the author Dr Adam S. Candy at
+[a.s.candy@tudelft.nl](mailto:a.s.candy@tudelft.nl)
+or
+[adam@candylab.org](mailto:adam@candylab.org).
 
 
