@@ -3,6 +3,14 @@ DataCollectECMWF
 
 Project to interact with external data libraries, including ECMWF, NCAS, ...
 
+Installation
+------------
+
+Install ECMWF API:
+
+> sudo pip install https://software.ecmwf.int/wiki/download/attachments/56664858/ecmwf-api-client-python.tgz
+
+
 Contact
 -------
 
