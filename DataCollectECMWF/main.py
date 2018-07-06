@@ -34,9 +34,6 @@ def main():
 
     import os
 
-    import ecmwf
-    import ncar
-
     ReadArguments()
 
     if len(universe.periods) == 0:
@@ -59,9 +56,11 @@ def main():
 
         if 'ecmwf' in universe.repos:
             report('%(blue)sProcessing repo: %(yellow)s%(repo)s%(end)s', var = {'repo': 'ecmwf'}, indent=2)
+            import ECMWF as ecmwf
             ecmwf.download(yearmonth=period, folder=universe.folder)
 
         if 'ncar' in universe.repos:
             report('%(blue)sProcessing repo: %(yellow)s%(repo)s%(end)s', var = {'repo': 'ncar'}, indent=2)
+            import NCAR as ncar
             ncar.download(yearmonth=period, folder=universe.folder)
 

@@ -25,16 +25,18 @@
 
 from Universe import universe
 from Reporting import report, error
+from Support import mkdir_p, pretty
+from NCAR_api import NCAR_Auth
 
 import os
+from calendar import monthrange
 
 def download(filename=None, yearmonth='201708', field='wind', fformat=None, folder='./'):
     from pydap.client import open_url                                               
     from pydap.cas.get_cookies import setup_session
     #from pydap.cas.urs import setup_session                                         
 
-    username = None 
-    password = None
+    auth = NCAR_Auth()
 
     year  = int(yearmonth[0:4])
     month = int(yearmonth[4:6])
@@ -76,10 +78,10 @@ def download(filename=None, yearmonth='201708', field='wind', fformat=None, fold
 
     # from pydap.client import open_url
 
-    session = setup_session(authentication_url, username, password)
-    dataset = open_url('http://server.example.com/path/to/dataset', session=session)
-
-    session = setup_session(username, password, check_url=url2)                     
+    report('%(blue)sAuthenticating with NCAR server with username: %(yellow)s%(username)s%(blue)s password: %(yellow)s%(password)s%(end)s', var={'username': auth.username, 'password': auth.password})
+    report('%(blue)sOPeNDAP URL: %(yellow)s%(url)s%(end)s', var = {'url': url})
+    #session = setup_session(username=auth.username, password=auth.password, check_url=url)
+    session = setup_session(username=auth.username, password=auth.password, check_url=url)
     data = open_url(url, session=session)
                                      
     print(data['time'].shape)                                                          

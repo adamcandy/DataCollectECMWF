@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 ##########################################################################
 #  
@@ -24,12 +23,21 @@
 #  
 ##########################################################################
 
-from __future__ import absolute_import
+import configparser
+import os
 
-import sys
-from DataCollectECMWF.Main import main
+class NCAR_Auth(object):
 
-if __name__ == '__main__':
-    sys.exit(main())
+    _config_filename = '~/.ncarapirc'
+
+    def __init__(self):
+        self.Read()        
+
+    def Read(self):
+        config = configparser.ConfigParser()
+        #config.sections()
+        config.read(os.path.expanduser(self._config_filename))
+        self.username = config['default']['username']
+        self.password = config['default']['password']
 
 
