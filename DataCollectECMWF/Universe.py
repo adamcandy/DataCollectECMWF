@@ -56,5 +56,5 @@ class universe():
     dry = False
     periods = []
     repos = []
-    directory = './'
+    folder = './'
 

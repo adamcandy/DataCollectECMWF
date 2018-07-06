@@ -36,9 +36,10 @@ def usage(unknown = None):
 - Options ---------------------\ 
    -m (YYYYMM)                 | Specify month period  (multiple -d permitted)
    -r (repo)                   | Specify repository names, e.g. 'ecmwf', 'ncar', ...  (multiple -r permitted)
-   -d (directory)              | Specify output folder 
+   -f (folder)                 | Specify output folder 
                                |_________________________________________________________________________________
    -h                          | Help
+   -d                          | Dry run
    -v                          | Verbose
    -vv                         | Very verbose (debugging)
    -q                          | Quiet

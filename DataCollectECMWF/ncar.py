@@ -30,7 +30,11 @@ import os
 
 def download(filename=None, yearmonth='201708', field='wind', fformat=None, folder='./'):
     from pydap.client import open_url                                               
-    from pydap.cas.urs import setup_session                                         
+    from pydap.cas.get_cookies import setup_session
+    #from pydap.cas.urs import setup_session                                         
+
+    ***REMOVED***
+    ***REMOVED***
 
     year  = int(yearmonth[0:4])
     month = int(yearmonth[4:6])
@@ -69,6 +73,11 @@ def download(filename=None, yearmonth='201708', field='wind', fformat=None, fold
         mkdir_p(os.path.abspath(folder))
 
     fullname = os.path.join(os.path.abspath(folder), filename)
+
+    # from pydap.client import open_url
+
+    session = setup_session(authentication_url, username, password)
+    dataset = open_url('http://server.example.com/path/to/dataset', session=session)
 
     session = setup_session(username, password, check_url=url2)                     
     data = open_url(url, session=session)

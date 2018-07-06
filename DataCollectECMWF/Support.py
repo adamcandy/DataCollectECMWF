@@ -28,7 +28,7 @@ from Universe import universe
 from Reporting import report, error
 from Usage import usage
 
-import sys
+import sys, os
 
 def mkdir_p(path):
     try:
@@ -38,18 +38,27 @@ def mkdir_p(path):
             pass
         else: raise
 
-def ReadArguments(self):
+def pretty(d, indent=0):
+   for key, value in d.items():
+      print('\t' * indent + str(key))
+      if isinstance(value, dict):
+         pretty(value, indent+1)
+      else:
+         print('\t' * (indent+1) + str(value))
+
+def ReadArguments():
     arguments = sys.argv[1:]
     free_arguments = []
-    while (len(self.arguments) > 0):
+    while (len(arguments) > 0):
         argument = arguments.pop(0).rstrip()
-        if   (self.argument == '-h'):  usage() 
-        elif (self.argument == '-v'):  universe.verbose = True
-        elif (self.argument == '-vv'): universe.verbose = True; universe.debug = True; 
-        elif (self.argument == '-q'):  universe.verbose = False
-        elif (self.argument == '-m'):  universe.periods.append(arguments.pop(0).rstrip())
-        elif (self.argument == '-r'):  universe.repos.append(arguments.pop(0).rstrip())
-        elif (self.argument == '-d'):  universe.directory(arguments.pop(0).rstrip())
+        if   (argument == '-h'):  usage() 
+        elif (argument == '-v'):  universe.verbose = True
+        elif (argument == '-vv'): universe.verbose = True; universe.debug = True; 
+        elif (argument == '-q'):  universe.verbose = False
+        elif (argument == '-d'):  universe.dry = True
+        elif (argument == '-m'):  universe.periods.append(arguments.pop(0).rstrip())
+        elif (argument == '-r'):  universe.repos.append(arguments.pop(0).rstrip())
+        elif (argument == '-f'):  universe.folder = arguments.pop(0).rstrip()
         else:
             usage(unknown = argument)
 

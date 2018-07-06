@@ -25,7 +25,7 @@
 
 from Universe import universe
 from Reporting import report, error
-from Support import mkdir_p
+from Support import mkdir_p, pretty
 
 from ecmwfapi import ECMWFDataServer
 from calendar import monthrange
@@ -70,8 +70,8 @@ def download(filename=None, yearmonth='201708', fformat=None, folder='./'):
     spec = {
         "class": "ea",
         "dataset": "era5",
-        #"date": "%(year)d%(month)d01/%(year)d%(month)d%(date)d" % {
-        "date": "%(year)d-%(month)d-01/to/%(year)d-%(month)d-%(date)d" % {
+        #"date": "%(year)d%(month)02d01/%(year)d%(month)02d%(date)d" % {
+        "date": "%(year)d-%(month)02d-01/to/%(year)d-%(month)02d-%(date)d" % {
             'year':  year,
             'month': month,
             'date':  end_date,
@@ -94,10 +94,11 @@ def download(filename=None, yearmonth='201708', fformat=None, folder='./'):
         spec['format'] = fformat
         # Requires grid spec?
         #    See: https://software.ecmwf.int/wiki/display/CKB/Global+data%3A+Download+data+from+ECMWF+for+a+particular+area+and+resolution
-    print 'ECMWF ERA5 Collect for period %(period)s, output to: %(fullname)s' % {
+    report('%(blue)sECMWF ERA5 Collect for period %(yellow)s%(period)s%(blue)s, output to: %(yellow)s%(filename)s%(end)s', var = {
         'filename': fullname,
         'period': spec['date'],
-    }
+    }, indent=2)
+    pretty(spec)
     if not universe.dry:
         server = ECMWFDataServer()
         server.retrieve(spec)

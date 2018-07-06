@@ -48,20 +48,20 @@ def main():
         #universe.repos.append('ncar')
 
     report('%(blue)sProcessing periods: %(yellow)s%(periods)s%(end)s', var = {'periods': '%(grey)s, %(yellow)s'.join(universe.periods)})
-    report('%(blue)sProcessing repos: %(yellow)s%(repos)s%(end)s', var = {'periods': '%(grey)s, %(yellow)s'.join(universe.repos)})
+    report('%(blue)sProcessing repos: %(yellow)s%(repos)s%(end)s', var = {'repos': '%(grey)s, %(yellow)s'.join(universe.repos)})
     
-    report('%(blue)sOutput to directory: %(yellow)s%(directory)s%(end)s', var = {'directory': universe.directory})
+    report('%(blue)sOutput to directory: %(yellow)s%(directory)s%(end)s', var = {'directory': universe.folder})
 
     
 
     for period in universe.periods:
-        report('%(blue)sProcessing period: %(yellow)s%(period)s%(end)s', var = {'period': period})
+        report('%(blue)sProcessing period: %(yellow)s%(period)s%(end)s', var = {'period': period}, indent=1)
 
         if 'ecmwf' in universe.repos:
-            report('  %(blue)sProcessing repo: %(yellow)s%(repo)s%(end)s', var = {'repo': 'ecmwf'})
-            ecmwf.download(yearmonth=period, folder=universe.directory)
+            report('%(blue)sProcessing repo: %(yellow)s%(repo)s%(end)s', var = {'repo': 'ecmwf'}, indent=2)
+            ecmwf.download(yearmonth=period, folder=universe.folder)
 
         if 'ncar' in universe.repos:
-            report('  %(blue)sProcessing repo: %(yellow)s%(repo)s%(end)s', var = {'repo': 'ncar'})
-            ncar.download(yearmonth=period, folder=universe.directory)
+            report('%(blue)sProcessing repo: %(yellow)s%(repo)s%(end)s', var = {'repo': 'ncar'}, indent=2)
+            ncar.download(yearmonth=period, folder=universe.folder)
 

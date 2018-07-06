@@ -84,8 +84,6 @@ def report(text, var = {}, debug = False, force = False, colourful = True, inden
         suffix = '  %(grey)s[DEBUG]%(end)s'
     if universe.verbose or force or (universe.testfolder is not None and test):
         print((spacer + text + suffix) % addcolour(var, colourful = colourful))
-    if universe.log is not None:
-        universe.log.Write(spacer + text % addcolour(var, colourful = False))
 
 def error(text, var = {}, fatal=False, warning=False):
     suffix = ''
