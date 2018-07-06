@@ -1,0 +1,4 @@
+TODO
+====
+- [x] Check is file output alredy exists and do not overwrite, unless -y
+

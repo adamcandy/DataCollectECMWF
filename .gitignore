@@ -1,0 +1,7 @@
+*.pyc
+*.pkl
+bin
+.DS_Store
+
+test/*
+
