@@ -7,7 +7,7 @@
 #
 #  Project to interact with external data libraries, including ECMWF, NCAS, ...
 #  
-#  Copyright (C) 2018- Dr Adam S. Candy, adam@candylab.org
+#  Copyright (C) 2018- Dr Adam S. Candy, a.s.candy@tudelft.nl, adam@candylab.org
 #  
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
