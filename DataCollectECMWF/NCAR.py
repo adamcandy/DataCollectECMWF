@@ -53,13 +53,13 @@ def download(filename=None, yearmonth='201708', field='wind', fformat=None, fold
     description = None
 
     if field == 'wind':
-        url = 'https://rda.ucar.edu/thredds/dodsC/files/g/ds094.1/%(year)d/wnd10m.cdas1.%(year)d%(month)d.grb2' % {
+        url = 'https://rda.ucar.edu/thredds/dodsC/files/g/ds094.1/%(year)d/wnd10m.cdas1.%(year)d%(month)02d.grb2' % {
             'year':  year,
             'month': month,
         } 
         description = 'wnd10m'
     else:
-        url = 'https://rda.ucar.edu/thredds/dodsC/files/g/ds094.1/%(year)d/prmsl.cdas1.%(year)d%(month)d.grb2' % {
+        url = 'https://rda.ucar.edu/thredds/dodsC/files/g/ds094.1/%(year)d/prmsl.cdas1.%(year)d%(month)02d.grb2' % {
             'year':  year,
             'month': month,
         } 
@@ -80,6 +80,26 @@ def download(filename=None, yearmonth='201708', field='wind', fformat=None, fold
 
     report('%(blue)sAuthenticating with NCAR server with username: %(yellow)s%(username)s%(blue)s password: %(yellow)s%(password)s%(end)s', var={'username': auth.username, 'password': auth.password})
     report('%(blue)sOPeNDAP URL: %(yellow)s%(url)s%(end)s', var = {'url': url})
+
+
+    # Works:
+    #   https://rda.ucar.edu/data/ds094.1/2017/prmsl.cdas1.201709.grb2
+    #   https://rda.ucar.edu/data/ds094.1/2017/wnd10m.cdas1.201708.grb2
+    #   https://rda.ucar.edu/data/ds094.1/2017/wnd10m.cdas1.201709.grb2
+    # (see https://rda.ucar.edu/datasets/ds094.1/#sfol-wl-/data/ds094.1?p=6)
+
+
+    print("wget --save-cookies cookie --post-data=\"email="+auth.username+"&passwd="+auth.password+"&action=login\" \"https://rda.ucar.edu/cgi-bin/login\"")
+    print("wget --load-cookies cookie \"" + url + "\"")
+
+
+    from pydap.client import open_url
+    from pydap.cas.urs import setup_session
+    session = setup_session(auth.username, auth.password)
+    dataset = open_url(url, session=session)
+
+
+
     #session = setup_session(username=auth.username, password=auth.password, check_url=url)
     session = setup_session(username=auth.username, password=auth.password, check_url=url)
     data = open_url(url, session=session)
