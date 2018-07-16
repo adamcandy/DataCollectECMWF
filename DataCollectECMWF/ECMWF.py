@@ -58,7 +58,7 @@ def download(filename=None, yearmonth='201708', fformat=None, folder='./'):
     end_date = monthrange(year, month)[-1]
 
     if not filename:
-        filename = 'ecmwf-era5-winds10m-%(yearmonth)s.nc' % {
+        filename = 'ecmwf-era5-winds10m-pmsl-%(yearmonth)s.grb' % {
             'yearmonth': yearmonth,
         }
 
